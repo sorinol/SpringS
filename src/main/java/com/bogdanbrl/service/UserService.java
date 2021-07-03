@@ -2,12 +2,14 @@ package com.bogdanbrl.service;
 
 import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.repository.UserRepository;
+import jdk.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,5 +52,17 @@ public class UserService {
             userModel.setPassword(encodedPassword);
         }
         userRepository.save(userModel);
+    }
+
+    public UserModel getUserById(Long id){
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public List<UserModel> getUsers(){
+        return userRepository.findAll();
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 }
