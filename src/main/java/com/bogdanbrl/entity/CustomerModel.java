@@ -13,6 +13,7 @@ public class CustomerModel {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
 
     @ManyToMany(mappedBy = "customers")
     private List<TravelOfferModel> reservations = new ArrayList<>();
@@ -47,5 +48,13 @@ public class CustomerModel {
 
     public void setReservations(List<TravelOfferModel> reservations) {
         this.reservations = reservations;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

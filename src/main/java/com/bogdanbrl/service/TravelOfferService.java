@@ -27,7 +27,24 @@ public class TravelOfferService {
         travelOfferRepository.save(travelOfferModel);
     }
 
+    public void editOffer(TravelOfferModel travelOfferModel) {
+        travelOfferRepository.save(travelOfferModel);
+    }
+
     public List<TravelOfferModel> findOffers(double maxPrice, long destinationId) {
         return travelOfferRepository.findOffers(maxPrice, destinationId);
     }
+
+    public TravelOfferModel getOfferById(Long id) {
+        return travelOfferRepository.findById(id).orElse(null);
+    }
+
+    public void deleteOfferById (Long id) {
+        travelOfferRepository.deleteById(id);
+    }
+
+    public List<TravelOfferModel> getOffers (){
+        return travelOfferRepository.findAll();
+    }
+
 }

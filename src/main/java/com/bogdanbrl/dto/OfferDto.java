@@ -1,29 +1,15 @@
-package com.bogdanbrl.entity;
+package com.bogdanbrl.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class OfferDto {
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "offers")
-public class TravelOfferModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double pricePerNight;
     private String description;
     private String title;
     private String contactNumber;
-
-    @ManyToOne
-    private TravelDestinationModel destination;
-
-    @JsonIgnore
-    @ManyToMany
-    private List<CustomerModel> customers = new ArrayList<>();
+    private Long destinationId;
+    private String firstNameCustomer;
+    private String lastNameCustomer;
 
     public Long getId() {
         return id;
@@ -65,19 +51,27 @@ public class TravelOfferModel {
         this.contactNumber = contactNumber;
     }
 
-    public TravelDestinationModel getDestination() {
-        return destination;
+    public Long getDestinationId() {
+        return destinationId;
     }
 
-    public void setDestination(TravelDestinationModel destination) {
-        this.destination = destination;
+    public void setDestinationId(Long destinationId) {
+        this.destinationId = destinationId;
     }
 
-    public List<CustomerModel> getCustomers() {
-        return customers;
+    public String getFirstNameCustomer() {
+        return firstNameCustomer;
     }
 
-    public void setCustomers(List<CustomerModel> customers) {
-        this.customers = customers;
+    public void setFirstNameCustomer(String firstNameCustomer) {
+        this.firstNameCustomer = firstNameCustomer;
+    }
+
+    public String getLastNameCustomer() {
+        return lastNameCustomer;
+    }
+
+    public void setLastNameCustomer(String lastNameCustomer) {
+        this.lastNameCustomer = lastNameCustomer;
     }
 }
