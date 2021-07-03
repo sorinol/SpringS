@@ -1,7 +1,7 @@
 package com.bogdanbrl.service;
 
-import com.bogdanbrl.entity.CustomerModel;
 import com.bogdanbrl.entity.TravelOfferModel;
+import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.repository.TravelOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ public class TravelOfferService {
     @Autowired
     private TravelOfferRepository travelOfferRepository;
 
-    public List<CustomerModel> getCustomer(Long offerId){
+    public List<UserModel> getCustomer(Long offerId){
         Optional<TravelOfferModel> offerFound = travelOfferRepository.findById(offerId);
         TravelOfferModel travelOfferModel = offerFound.get();
-        List<CustomerModel> customerModels = travelOfferModel.getCustomers();
+        List<UserModel> customerModels = travelOfferModel.getCustomers();
 
         return customerModels;
     }

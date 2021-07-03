@@ -8,8 +8,6 @@ public class OfferDto {
     private String title;
     private String contactNumber;
     private Long destinationId;
-    private String firstNameCustomer;
-    private String lastNameCustomer;
 
     public Long getId() {
         return id;
@@ -59,19 +57,4 @@ public class OfferDto {
         this.destinationId = destinationId;
     }
 
-    public String getFirstNameCustomer() {
-        return firstNameCustomer;
-    }
-
-    public void setFirstNameCustomer(String firstNameCustomer) {
-        this.firstNameCustomer = firstNameCustomer;
-    }
-
-    public String getLastNameCustomer() {
-        return lastNameCustomer;
-    }
-
-    public void setLastNameCustomer(String lastNameCustomer) {
-        this.lastNameCustomer = lastNameCustomer;
-    }
 }

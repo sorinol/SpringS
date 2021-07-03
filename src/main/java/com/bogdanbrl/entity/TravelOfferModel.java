@@ -23,7 +23,7 @@ public class TravelOfferModel {
 
     @JsonIgnore
     @ManyToMany
-    private List<CustomerModel> customers = new ArrayList<>();
+    private List<UserModel> customers = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -73,11 +73,11 @@ public class TravelOfferModel {
         this.destination = destination;
     }
 
-    public List<CustomerModel> getCustomers() {
+    public List<UserModel> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<CustomerModel> customers) {
+    public void setCustomers(List<UserModel> customers) {
         this.customers = customers;
     }
 }

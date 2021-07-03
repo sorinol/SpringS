@@ -1,22 +1,15 @@
-package com.bogdanbrl.entity;
+package com.bogdanbrl.dto;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+public class UserDto {
 
-@Entity
-@Table(name = "customers")
-public class CustomerModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String username;
+    private String password;
+    private String role;
     private String firstName;
     private String lastName;
     private String email;
-
-    @ManyToMany(mappedBy = "customers")
-    private List<TravelOfferModel> reservations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -24,6 +17,30 @@ public class CustomerModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -40,14 +57,6 @@ public class CustomerModel {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public List<TravelOfferModel> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<TravelOfferModel> reservations) {
-        this.reservations = reservations;
     }
 
     public String getEmail() {

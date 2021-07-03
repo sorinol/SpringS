@@ -1,5 +1,6 @@
 package com.bogdanbrl.controller;
 
+import com.bogdanbrl.dto.UserDto;
 import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +29,47 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity addUser(@RequestBody UserModel newUser){
+    public ResponseEntity addUser(@RequestBody UserDto userDto){
 
-        if (userService.checkUsername(newUser.getUsername())) {
-            return new ResponseEntity(newUser, HttpStatus.BAD_REQUEST);
+        if (userService.checkUsername(userDto.getUsername())) {
+            return new ResponseEntity(userDto, HttpStatus.BAD_REQUEST);
         }
+
+        UserModel newUser = new UserModel();
+        newUser.setUsername(userDto.getUsername());
+        newUser.setFirstName(userDto.getFirstName());
+        newUser.setLastName(userDto.getLastName());
+        newUser.setPassword(userDto.getPassword());
+        newUser.setEmail(userDto.getEmail());
+        newUser.setRole("ROLE_USER");
+
         userService.addUser(newUser);
         return new ResponseEntity(newUser, HttpStatus.OK);
     }
 
     @PutMapping("/editUser")
-    public ResponseEntity editUser(@RequestBody UserModel newUser){
+    public ResponseEntity editUser(@RequestBody UserDto userDto){
 
-        UserModel userFromDb = userService.getUserById(newUser.getId());
+        UserModel userFromDb = userService.getUserById(userDto.getId());
         if (userFromDb == null) {
-            return new ResponseEntity(newUser, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(userDto, HttpStatus.BAD_REQUEST);
         }
 
-        if (!newUser.getUsername().equalsIgnoreCase(userFromDb.getUsername())) {
-            if (userService.checkUsername(newUser.getUsername())) {
-                return new ResponseEntity(newUser, HttpStatus.BAD_REQUEST);
+        if (!userDto.getUsername().equalsIgnoreCase(userFromDb.getUsername())) {
+            if (userService.checkUsername(userDto.getUsername())) {
+                return new ResponseEntity(userDto, HttpStatus.BAD_REQUEST);
             }
         }
 
-        userService.editUser(newUser);
-        return new ResponseEntity(newUser, HttpStatus.OK);
+        userFromDb.setUsername(userDto.getUsername());
+        userFromDb.setFirstName(userDto.getFirstName());
+        userFromDb.setLastName(userDto.getLastName());
+        userFromDb.setPassword(userDto.getPassword());
+        userFromDb.setEmail(userDto.getEmail());
+        userFromDb.setRole(userDto.getRole());
+
+        userService.editUser(userFromDb);
+        return new ResponseEntity(userFromDb, HttpStatus.OK);
     }
 
     @GetMapping("/getUsers")

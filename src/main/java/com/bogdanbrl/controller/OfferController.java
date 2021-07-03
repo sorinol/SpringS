@@ -1,11 +1,12 @@
 package com.bogdanbrl.controller;
 
 import com.bogdanbrl.dto.OfferDto;
-import com.bogdanbrl.entity.CustomerModel;
 import com.bogdanbrl.entity.TravelDestinationModel;
 import com.bogdanbrl.entity.TravelOfferModel;
+import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.service.DestinationService;
 import com.bogdanbrl.service.TravelOfferService;
+import com.bogdanbrl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,12 @@ public class OfferController {
     @Autowired
     private TravelOfferService offerService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/reservations")
     public ResponseEntity getReservations(@RequestParam("id") Long id) {
-        List<CustomerModel> customers = offerService.getCustomer(id);
+        List<UserModel> customers = offerService.getCustomer(id);
         return new ResponseEntity(customers, HttpStatus.OK);
     }
 
@@ -87,5 +91,20 @@ public class OfferController {
             return new ResponseEntity("oferta nu exista", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(offer, HttpStatus.OK);
+    }
+
+    @PostMapping("/buyOffer")
+    public ResponseEntity buyOffer(@RequestParam("offerId") Long offerId, @RequestParam("userId") Long userId){
+        TravelOfferModel offerModel = offerService.getOfferById(offerId);
+        List<UserModel> customers = offerModel.getCustomers();
+
+        UserModel userModel = userService.getUserById(userId);
+        if (userModel == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        customers.add(userModel);
+        offerService.editOffer(offerModel);
+
+        return new ResponseEntity(offerModel, HttpStatus.OK);
     }
 }

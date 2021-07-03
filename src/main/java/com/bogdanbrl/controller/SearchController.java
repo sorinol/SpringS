@@ -15,6 +15,7 @@ public class SearchController {
 
     @Autowired
     private DestinationService destinationService;
+
     @Autowired
     private TravelOfferService offerService;
 

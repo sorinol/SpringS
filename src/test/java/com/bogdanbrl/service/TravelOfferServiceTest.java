@@ -1,7 +1,7 @@
 package com.bogdanbrl.service;
 
-import com.bogdanbrl.entity.CustomerModel;
 import com.bogdanbrl.entity.TravelOfferModel;
+import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.repository.TravelOfferRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,16 +36,16 @@ class TravelOfferServiceTest {
         travelOfferModel.setId(1L);
         travelOfferModel.setTitle("Oferta test");
 
-        CustomerModel customerModel = new CustomerModel();
+        UserModel customerModel = new UserModel();
         customerModel.setId(1L);
-        customerModel.setLastName("papagal");
+        customerModel.setUsername("papagal");
         travelOfferModel.getCustomers().add(customerModel);
 
         Mockito.when(travelOfferRepository.findById(1L)).thenReturn(Optional.of(travelOfferModel));
-        List<CustomerModel> customerModelList = travelOfferService.getCustomer(1L);
+        List<UserModel> customerModelList = travelOfferService.getCustomer(1L);
 
         Assertions.assertEquals(1, customerModelList.size());
-        CustomerModel customerFound = customerModelList.get(0);
-        Assertions.assertEquals("papagal", customerFound.getLastName());
+        UserModel customerFound = customerModelList.get(0);
+        Assertions.assertEquals("papagal", customerFound.getUsername());
     }
 }
