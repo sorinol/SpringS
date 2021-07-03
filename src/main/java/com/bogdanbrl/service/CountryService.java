@@ -34,4 +34,8 @@ public class CountryService {
     public CountryModel getByName(String name){
         return countryRepository.findByName(name);
     }
+
+    public void deleteCountry(Long id) {
+        countryRepository.deleteById(id);
+    }
 }

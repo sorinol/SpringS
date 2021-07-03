@@ -1,5 +1,7 @@
 package com.bogdanbrl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class TravelOfferModel {
     @ManyToOne
     private TravelDestinationModel destination;
 
+    @JsonIgnore
     @ManyToMany
     private List<CustomerModel> customers = new ArrayList<>();
 

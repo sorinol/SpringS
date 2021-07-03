@@ -31,6 +31,11 @@ public class DestinationController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/getDestinationById/{id}")
+    public ResponseEntity getDestinationById(@PathVariable Long id) {
+        TravelDestinationModel destination = destinationService.getById(id);
+        return new ResponseEntity(destination, HttpStatus.OK);
+    }
 
     @GetMapping("/getDestinations")
     public ResponseEntity getDestinations() {
@@ -80,7 +85,7 @@ public class DestinationController {
     }
 
     @GetMapping("/offers")
-    public ResponseEntity viewOffers(@RequestParam("destinationId") Long destinationId){
+    public ResponseEntity viewOffers(@RequestParam("destinationId") Long destinationId) {
         TravelDestinationModel destination = destinationService.getById(destinationId);
         List<TravelOfferModel> offers = destination.getOffers();
         return new ResponseEntity(offers, HttpStatus.OK);
