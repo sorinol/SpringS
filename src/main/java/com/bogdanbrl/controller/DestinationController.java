@@ -1,5 +1,7 @@
 package com.bogdanbrl.controller;
 
+import com.bogdanbrl.dto.DestinationDto;
+import com.bogdanbrl.entity.CountryModel;
 import com.bogdanbrl.entity.TravelDestinationModel;
 import com.bogdanbrl.entity.TravelOfferModel;
 import com.bogdanbrl.service.ContinentService;
@@ -7,13 +9,14 @@ import com.bogdanbrl.service.CountryService;
 import com.bogdanbrl.service.DestinationService;
 import com.bogdanbrl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class DestinationController {
 
     @Autowired
@@ -28,59 +31,58 @@ public class DestinationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("getDestinations")
-    public String getDestinations(Model model) {
+
+    @GetMapping("/getDestinations")
+    public ResponseEntity getDestinations() {
 
         List<TravelDestinationModel> destinations = destinationService.getAll();
 
-        model.addAttribute("title", "Titlul paginii");
-        model.addAttribute("phoneNumber", "025655664665");
-
-        model.addAttribute("destinations", destinations);
-        model.addAttribute("currentUser", userService.getCurrentUser().getUsername());
-
-        return "travel-page";
+        return new ResponseEntity(destinations, HttpStatus.OK);
     }
 
-    @GetMapping("addDestinationPage")
-    public String getAddDestinationPage(Model model) {
-        model.addAttribute("destination", new TravelDestinationModel());
-        model.addAttribute("continentsList", continentService.getContinents());
-        model.addAttribute("countryList", countryService.getCountries());
-        return "add-destination-page";
+    @PostMapping("/addDestination")
+    public ResponseEntity addDestination(@RequestBody DestinationDto destinationDto) {
+        CountryModel countryModel = countryService.getById(destinationDto.getCountryId());
+        if (countryModel == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        TravelDestinationModel destination = new TravelDestinationModel();
+        destination.setName(destinationDto.getName());
+        destination.setDescription(destinationDto.getDescription());
+        destination.setCountry(countryModel);
+
+        destinationService.addDestination(destination);
+        return new ResponseEntity(destination, HttpStatus.OK);
     }
 
-    @PostMapping("addDestination")
-    public String addDestination(@ModelAttribute TravelDestinationModel travelDestinationModel) {
-        destinationService.addDestination(travelDestinationModel);
-        return "redirect:/getDestinations";
+    @PutMapping("/editDestination/{id}")
+    public ResponseEntity editDestination(@PathVariable("id") Long id, @RequestBody DestinationDto destinationDto) {
+        CountryModel countryModel = countryService.getById(destinationDto.getCountryId());
+        if (countryModel == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        TravelDestinationModel destination = new TravelDestinationModel();
+        destination.setId(id);
+//        destination.setId(destinationDto.getId());
+        destination.setName(destinationDto.getName());
+        destination.setDescription(destinationDto.getDescription());
+        destination.setCountry(countryModel);
+
+        destinationService.editDestination(destination);
+        return new ResponseEntity(destination, HttpStatus.OK);
     }
 
-    @GetMapping("editDestinationPage")
-    public String getEditDestinationPage(@RequestParam("id") Long id, Model model) {
-        TravelDestinationModel travelDestinationModel = destinationService.getById(id);
-        model.addAttribute("destination", travelDestinationModel);
-        model.addAttribute("continentsList", continentService.getContinents());
-        return "edit-destination-page";
-    }
-
-    @PostMapping("editDestination")
-    public String editDestination(@ModelAttribute TravelDestinationModel travelDestinationModel) {
-        destinationService.editDestination(travelDestinationModel);
-        return "redirect:/getDestinations";
-    }
-
-    @GetMapping("deletedestination")
-    public String deleteDestination(@RequestParam("id") Long id, Model model) {
+    @DeleteMapping("/deleteDestination/{id}")
+    public ResponseEntity deleteDestination(@PathVariable("id") Long id) {
         destinationService.remove(id);
-        return "redirect:/getDestinations";
+        return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("offers")
-    public String viewOffers(@RequestParam("id") Long id, Model model){
-        TravelDestinationModel destination = destinationService.getById(id);
+    @GetMapping("/offers")
+    public ResponseEntity viewOffers(@RequestParam("destinationId") Long destinationId){
+        TravelDestinationModel destination = destinationService.getById(destinationId);
         List<TravelOfferModel> offers = destination.getOffers();
-        model.addAttribute("offers", offers);
-        return "view-offers-page";
+        return new ResponseEntity(offers, HttpStatus.OK);
     }
 }

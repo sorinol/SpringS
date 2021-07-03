@@ -22,12 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register",
                         "/addUser", "/",
                         "/searchOffer")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and()
-                .logout().permitAll();
+                .permitAll();
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin().loginPage("/login").permitAll()
+//                .and()
+//                .logout().permitAll();
     }
 
     @Override

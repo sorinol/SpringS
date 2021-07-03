@@ -1,5 +1,7 @@
 package com.bogdanbrl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class TravelDestinationModel {
     @ManyToOne
     private CountryModel country;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "destination")
     private List<TravelOfferModel> offers = new ArrayList<>();
 
