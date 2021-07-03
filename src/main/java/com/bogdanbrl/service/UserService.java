@@ -36,4 +36,19 @@ public class UserService {
         Optional<UserModel> userModelOptional = userRepository.findByUsername(currentPrincipalName);
         return userModelOptional.orElseThrow(() -> new IllegalArgumentException("No user found"));
     }
+
+    public boolean checkUsername(String username){
+        return userRepository.findByUsername(username).isPresent();
+    }
+
+    public void editUser(UserModel userModel) {
+        String password = userModel.getPassword();
+
+        if (password != null && !password.trim().isEmpty()) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = bCryptPasswordEncoder.encode(password);
+            userModel.setPassword(encodedPassword);
+        }
+        userRepository.save(userModel);
+    }
 }

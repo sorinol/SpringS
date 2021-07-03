@@ -3,13 +3,12 @@ package com.bogdanbrl.controller;
 import com.bogdanbrl.entity.UserModel;
 import com.bogdanbrl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -26,9 +25,22 @@ public class UserController {
         return "register-page";
     }
 
-    @PostMapping("addUser")
-    public String addUser(@ModelAttribute UserModel newUser){
+    @PostMapping("/addUser")
+    public ResponseEntity addUser(@RequestBody UserModel newUser){
+
+        if (userService.checkUsername(newUser.getUsername())) {
+            return new ResponseEntity(newUser, HttpStatus.BAD_REQUEST);
+        }
         userService.addUser(newUser);
-        return "redirect:/login";
+        return new ResponseEntity(newUser, HttpStatus.OK);
+    }
+
+    @PutMapping("/editUser")
+    public ResponseEntity editUser(@RequestBody UserModel newUser){
+        if (userService.checkUsername(newUser.getUsername())) {
+            return new ResponseEntity(newUser, HttpStatus.BAD_REQUEST);
+        }
+        userService.editUser(newUser);
+        return new ResponseEntity(newUser, HttpStatus.OK);
     }
 }
