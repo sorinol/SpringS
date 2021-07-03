@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add destination</title>
+</head>
+<body>
+
+<h2>Add destination</h2>
+<form th:action="addDestination" method="post" th:object="${destination}">
+    <label for="destinationName">Destination name:</label><br>
+    <input type="text" id="destinationName" th:field="*{name}" name="destinationName"><br>
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" th:field="*{description}" name="description"><br>
+    <label for="country">Country:</label><br>
+    <input type="text" id="country" th:field="*{country}" name="country"><br>
+    <label for="continent">Continent:</label><br>
+    <select th:field="*{country.continent}" id="continent" name="continent">
+        <option th:each="continent : ${continentsList}"
+                th:value="${continent.name}"
+                th:text="${continent.name}">Each
+        </option>
+    </select><br>
+    <input type="submit" value="Add Destination">
+</form>
+
+
+</body>
+</html>

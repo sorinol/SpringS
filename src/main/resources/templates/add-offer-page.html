@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add offer</title>
+</head>
+<body>
+<form th:action="addOffer" method="post" th:object="${newOffer}">
+    <label for="offerTitle">Title of offer:</label><br>
+    <input type="text" id="offerTitle" th:field="*{title}" name="offerTitle"><br>
+
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" th:field="*{description}" name="description"><br><br>
+
+    <label for="contactNumber">Contact number:</label><br>
+    <input type="number" id="contactNumber" th:field="*{contactNumber}" name="contactNumber"><br><br>
+
+    <label for="pricePerNight">Price per night:</label><br>
+    <input type="number" id="pricePerNight" th:field="*{pricePerNight}" name="pricePerNight"><br><br>
+
+<!--    <label for="destination">Travel destination: </label><br>-->
+    <input type="number" hidden id="destination" th:field="*{destination.id}" name="destination"><br><br>
+
+    <input type="submit" value="Add Offer">
+</form>
+</body>
+</html>

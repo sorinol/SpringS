@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Offers</title>
+</head>
+<body>
+
+<form th:action="searchOffer" method="post" th:object="${searchOffer}">
+    <label for="maxPrice">Maxim price:</label>
+    <input type="number" id="maxPrice" name="maxPrice" th:field="*{maxPrice}"><br><br>
+    <div>
+        <label for="destinations">Choose a Destination:</label>
+        <select name="destinations" id="destinations" th:field="*{destinationId}">
+            <option th:each="destination: ${destinations}"
+                    th:value="${destination.id}"
+                    th:text="${destination.name}"></option>
+        </select>
+    </div>
+    <input type="submit" value="Search">
+</form>
+
+<!--show founded offers-->
+<div th:each="offer: ${offers}">
+    <h2 th:text="${offer.title}"></h2>
+    <p th:text=" 'price per night:' + ${offer.pricePerNight} "></p>
+    <p th:text="${offer.description}"></p>
+</div>
+
+</body>
+</html>

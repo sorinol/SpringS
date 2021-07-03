@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.min.js}"></script>
+
+    <title>Customers</title>
+</head>
+<body>
+
+<div th:class="container">
+
+    <div th:class="h2">Clients</div>
+
+    <ul th:class="list-group">
+        <li th:each="customer: ${customers}" th:class="list-group-item"
+            th:text="${customer.id} +'. ' + ${customer.firstName} + ' ' + ${customer.lastName}">
+            An item
+        </li>
+
+    </ul>
+</div>
+
+</body>
+</html>
