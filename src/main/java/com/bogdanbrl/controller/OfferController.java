@@ -1,5 +1,6 @@
 package com.bogdanbrl.controller;
 
+import com.bogdanbrl.dto.BuyOfferDto;
 import com.bogdanbrl.dto.OfferDto;
 import com.bogdanbrl.entity.TravelDestinationModel;
 import com.bogdanbrl.entity.TravelOfferModel;
@@ -96,11 +97,11 @@ public class OfferController {
     }
 
     @PostMapping("/offers/buyOffer")
-    public ResponseEntity buyOffer(@RequestParam("offerId") Long offerId, @RequestParam("userId") Long userId){
-        TravelOfferModel offerModel = offerService.getOfferById(offerId);
+    public ResponseEntity buyOffer(@RequestBody BuyOfferDto buyOfferDto){
+        TravelOfferModel offerModel = offerService.getOfferById(buyOfferDto.getOfferId());
         List<UserModel> customers = offerModel.getCustomers();
 
-        UserModel userModel = userService.getUserById(userId);
+        UserModel userModel = userService.getUserById(buyOfferDto.getUserId());
         if (userModel == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
