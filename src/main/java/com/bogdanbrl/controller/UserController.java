@@ -28,7 +28,7 @@ public class UserController {
         return "register-page";
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/user/addUser")
     public ResponseEntity addUser(@RequestBody UserDto userDto){
 
         if (userService.checkUsername(userDto.getUsername())) {
@@ -47,7 +47,7 @@ public class UserController {
         return new ResponseEntity(newUser, HttpStatus.OK);
     }
 
-    @PutMapping("/editUser")
+    @PutMapping("/user/editUser")
     public ResponseEntity editUser(@RequestBody UserDto userDto){
 
         UserModel userFromDb = userService.getUserById(userDto.getId());
@@ -72,13 +72,13 @@ public class UserController {
         return new ResponseEntity(userFromDb, HttpStatus.OK);
     }
 
-    @GetMapping("/getUsers")
+    @GetMapping("/user/getUsers")
     public ResponseEntity getUsers(){
         List<UserModel> users = userService.getUsers();
         return new ResponseEntity(users, HttpStatus.OK);
     }
 
-    @GetMapping("/getUserById/{id}")
+    @GetMapping("/user/getUserById/{id}")
     public ResponseEntity getUserById(@PathVariable("id") Long id){
         UserModel user = userService.getUserById(id);
         if (user != null) {
@@ -88,7 +88,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/user/deleteUser/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Long id){
         userService.deleteUserById(id);
         return new ResponseEntity(HttpStatus.OK);
