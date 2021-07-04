@@ -31,13 +31,13 @@ public class DestinationController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getDestinationById/{id}")
+    @GetMapping("/destination/getDestinationById/{id}")
     public ResponseEntity getDestinationById(@PathVariable Long id) {
         TravelDestinationModel destination = destinationService.getById(id);
         return new ResponseEntity(destination, HttpStatus.OK);
     }
 
-    @GetMapping("/getDestinations")
+    @GetMapping("/destination/getDestinations")
     public ResponseEntity getDestinations() {
 
         List<TravelDestinationModel> destinations = destinationService.getAll();
@@ -45,7 +45,7 @@ public class DestinationController {
         return new ResponseEntity(destinations, HttpStatus.OK);
     }
 
-    @PostMapping("/addDestination")
+    @PostMapping("/destination/addDestination")
     public ResponseEntity addDestination(@RequestBody DestinationDto destinationDto) {
         CountryModel countryModel = countryService.getById(destinationDto.getCountryId());
         if (countryModel == null) {
@@ -61,7 +61,7 @@ public class DestinationController {
         return new ResponseEntity(destination, HttpStatus.OK);
     }
 
-    @PutMapping("/editDestination/{id}")
+    @PutMapping("/destination/editDestination/{id}")
     public ResponseEntity editDestination(@PathVariable("id") Long id, @RequestBody DestinationDto destinationDto) {
         CountryModel countryModel = countryService.getById(destinationDto.getCountryId());
         if (countryModel == null) {
@@ -78,13 +78,13 @@ public class DestinationController {
         return new ResponseEntity(destination, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteDestination/{id}")
+    @DeleteMapping("/destination/deleteDestination/{id}")
     public ResponseEntity deleteDestination(@PathVariable("id") Long id) {
         destinationService.remove(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/offers")
+    @GetMapping("/destination/offers")
     public ResponseEntity viewOffers(@RequestParam("destinationId") Long destinationId) {
         TravelDestinationModel destination = destinationService.getById(destinationId);
         List<TravelOfferModel> offers = destination.getOffers();

@@ -21,7 +21,7 @@ public class CountryController {
     @Autowired
     private ContinentService continentService;
 
-    @PostMapping("/addCountry")
+    @PostMapping("/country/addCountry")
     public ResponseEntity addCountry(@RequestBody CountryDto countryDto){
         ContinentModel continent = continentService.getById(countryDto.getContinentId());
         if (continent == null) {
@@ -35,7 +35,7 @@ public class CountryController {
         return new ResponseEntity(country, HttpStatus.OK);
     }
 
-    @PutMapping("/editCountry/{id}")
+    @PutMapping("/country/editCountry/{id}")
     public ResponseEntity editCountry(@PathVariable("id") Long id, @RequestBody CountryDto countryDto){
         ContinentModel continent = continentService.getById(countryDto.getContinentId());
         if (continent == null) {
@@ -50,19 +50,19 @@ public class CountryController {
         return new ResponseEntity(country, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteCountry/{id}")
+    @DeleteMapping("/country/deleteCountry/{id}")
     public ResponseEntity deleteCountry(@PathVariable("id") Long id){
         countryService.deleteCountry(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/getCountries")
+    @GetMapping("/country/getCountries")
     public ResponseEntity getCountries(){
         List<CountryModel> countries = countryService.getCountries();
         return new ResponseEntity(countries, HttpStatus.OK);
     }
 
-    @GetMapping("/getCountryById/{id}")
+    @GetMapping("/country/getCountryById/{id}")
     public ResponseEntity getCountryById(@PathVariable("id") Long id){
         CountryModel country = countryService.getById(id);
         return new ResponseEntity(country, HttpStatus.OK);
