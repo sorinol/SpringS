@@ -8,6 +8,7 @@ public class OfferDto {
     private String title;
     private String contactNumber;
     private Long destinationId;
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -57,4 +58,11 @@ public class OfferDto {
         this.destinationId = destinationId;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

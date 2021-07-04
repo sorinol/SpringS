@@ -17,6 +17,7 @@ public class TravelOfferModel {
     private String description;
     private String title;
     private String contactNumber;
+    private String imageUrl;
 
     @ManyToOne
     private TravelDestinationModel destination;
@@ -79,5 +80,13 @@ public class TravelOfferModel {
 
     public void setCustomers(List<UserModel> customers) {
         this.customers = customers;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -26,13 +26,13 @@ public class OfferController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/reservations")
+    @GetMapping("/offers/reservations")
     public ResponseEntity getReservations(@RequestParam("id") Long id) {
         List<UserModel> customers = offerService.getCustomer(id);
         return new ResponseEntity(customers, HttpStatus.OK);
     }
 
-    @PostMapping("/addOffer")
+    @PostMapping("/offers/addOffer")
     public ResponseEntity addOffer(@RequestBody OfferDto offerDto) {
         TravelDestinationModel destinationModel = destinationService.getById(offerDto.getDestinationId());
         if (destinationModel == null) {
@@ -44,12 +44,13 @@ public class OfferController {
         offerModel.setContactNumber(offerDto.getContactNumber());
         offerModel.setPricePerNight(offerDto.getPricePerNight());
         offerModel.setDestination(destinationModel);
+        offerModel.setImageUrl(offerDto.getImageUrl());
 
         offerService.addOffer(offerModel);
         return new ResponseEntity(offerModel, HttpStatus.OK);
     }
 
-    @PutMapping("/editOffer/{id}")
+    @PutMapping("/offers/editOffer/{id}")
     public ResponseEntity editOffer(@PathVariable("id") Long id, @RequestBody OfferDto offerDto) {
 
         TravelOfferModel offerModel = offerService.getOfferById(id);
@@ -67,24 +68,25 @@ public class OfferController {
         offerModel.setContactNumber(offerDto.getContactNumber());
         offerModel.setPricePerNight(offerDto.getPricePerNight());
         offerModel.setDestination(destinationModel);
+        offerModel.setImageUrl(offerDto.getImageUrl());
 
         offerService.editOffer(offerModel);
         return new ResponseEntity(offerModel, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteOffer/{id}")
+    @DeleteMapping("/offers/deleteOffer/{id}")
     public ResponseEntity deleteOfferById(@PathVariable("id") Long id){
         offerService.deleteOfferById(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/getOffers")
+    @GetMapping("/offers/getOffers")
     public ResponseEntity getOffers() {
         List<TravelOfferModel> offers = offerService.getOffers();
         return new ResponseEntity(offers, HttpStatus.OK);
     }
 
-    @GetMapping("/getOfferById/{id}")
+    @GetMapping("/offers/getOfferById/{id}")
     public ResponseEntity getOfferById (@PathVariable("id") Long id) {
         TravelOfferModel offer = offerService.getOfferById(id);
         if (offer == null) {
@@ -93,7 +95,7 @@ public class OfferController {
         return new ResponseEntity(offer, HttpStatus.OK);
     }
 
-    @PostMapping("/buyOffer")
+    @PostMapping("/offers/buyOffer")
     public ResponseEntity buyOffer(@RequestParam("offerId") Long offerId, @RequestParam("userId") Long userId){
         TravelOfferModel offerModel = offerService.getOfferById(offerId);
         List<UserModel> customers = offerModel.getCustomers();
