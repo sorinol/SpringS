@@ -24,6 +24,7 @@ public class TravelOfferModel {
 
     @JsonIgnore
     @ManyToMany
+    @JoinTable(name = "offers_customers", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "offer_id")})
     private List<UserModel> customers = new ArrayList<>();
 
     public Long getId() {

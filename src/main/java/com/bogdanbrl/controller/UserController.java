@@ -6,6 +6,7 @@ import com.bogdanbrl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,9 @@ import java.util.List;
 
 @RestController
 public class UserController {
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserService userService;
@@ -64,9 +68,16 @@ public class UserController {
         userFromDb.setUsername(userDto.getUsername());
         userFromDb.setFirstName(userDto.getFirstName());
         userFromDb.setLastName(userDto.getLastName());
-        userFromDb.setPassword(userDto.getPassword());
         userFromDb.setEmail(userDto.getEmail());
-        userFromDb.setRole(userDto.getRole());
+        userFromDb.setRole("ROLE_USER");
+
+        if (!userDto.getPassword().equals("")){
+
+            System.out.println(userDto.getPassword());
+
+            String password = bCryptPasswordEncoder.encode(userDto.getPassword());
+            userFromDb.setPassword(password);
+        }
 
         userService.editUser(userFromDb);
         return new ResponseEntity(userFromDb, HttpStatus.OK);

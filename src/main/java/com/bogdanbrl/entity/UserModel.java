@@ -1,6 +1,7 @@
 package com.bogdanbrl.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +17,9 @@ public class UserModel {
     private String firstName;
     private String lastName;
     private String email;
+
+    @ManyToMany(mappedBy = "customers")
+    private List<TravelOfferModel> offers;
 
     public Long getId() {
         return id;

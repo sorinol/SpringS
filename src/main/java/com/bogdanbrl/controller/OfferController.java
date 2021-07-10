@@ -106,6 +106,7 @@ public class OfferController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         customers.add(userModel);
+        offerModel.setCustomers(customers);
         offerService.editOffer(offerModel);
 
         return new ResponseEntity(offerModel, HttpStatus.OK);
