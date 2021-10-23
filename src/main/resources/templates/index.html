@@ -2,29 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Offers</title>
+    <title>Faculties</title>
 </head>
 <body>
 
-<form th:action="searchOffer" method="post" th:object="${searchOffer}">
-    <label for="maxPrice">Maxim price:</label>
-    <input type="number" id="maxPrice" name="maxPrice" th:field="*{maxPrice}"><br><br>
+<form th:action="searchFaculty" method="post" th:object="${searchFaculty}">
     <div>
-        <label for="destinations">Choose a Destination:</label>
-        <select name="destinations" id="destinations" th:field="*{destinationId}">
-            <option th:each="destination: ${destinations}"
-                    th:value="${destination.id}"
-                    th:text="${destination.name}"></option>
+        <label for="universities">Choose a University:</label>
+        <select name="universities" id="universities" th:field="*{universityId}">
+            <option th:each="university: ${universities}"
+                    th:value="${university.id}"
+                    th:text="${university.name}"></option>
         </select>
     </div>
     <input type="submit" value="Search">
 </form>
 
-<!--show founded offers-->
-<div th:each="offer: ${offers}">
-    <h2 th:text="${offer.title}"></h2>
-    <p th:text=" 'price per night:' + ${offer.pricePerNight} "></p>
-    <p th:text="${offer.description}"></p>
+<div th:each="faculty: ${faculties}">
+    <h2 th:text="${faculty.name}"></h2>
+    <p th:text="${faculty.description}"></p>
 </div>
 
 </body>

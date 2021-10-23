@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add university</title>
+</head>
+<body>
+
+<h2>Add university</h2>
+<form th:action="addUniversity" method="post" th:object="${university}">
+    <label for="universityName">University name:</label><br>
+    <input type="text" id="universityName" th:field="*{name}" name="universityName"><br>
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" th:field="*{university}" name="description"><br>
+    <label for="city">City:</label><br>
+    <input type="text" id="city" th:field="*{city}" name="city"><br>
+
+    <input type="submit" value="Add University">
+</form>
+
+
+</body>
+</html>

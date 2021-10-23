@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add faculty</title>
+</head>
+<body>
+<form th:action="addFaculty" method="post" th:object="${newFaculty}">
+    <label for="facultyName">Name of faculty:</label><br>
+    <input type="text" id="facultyName" th:field="*{name}" name="facultyName"><br>
+
+    <label for="description">Description:</label><br>
+    <input type="text" id="description" th:field="*{description}" name="description"><br><br>
+
+    <label for="contactNumber">Contact number:</label><br>
+    <input type="number" id="contactNumber" th:field="*{contactNumber}" name="contactNumber"><br><br>
+
+    <label for="university">University: </label><br>-->
+    <input type="number" hidden id="university" th:field="*{university.id}" name="university"><br><br>
+
+    <input type="submit" value="Add Faculty">
+</form>
+</body>
+</html>

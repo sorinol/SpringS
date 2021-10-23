@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>University</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+<div th:align="center">
+    <p th:text="${name}"></p>
+    <p th:text="${phoneNumber}"></p>
+
+    <p th:text="'Hello ' + ${currentUser}">Hello </p><br>
+
+    <a th:href="logout" type="button" class="btn btn-primary">Logout</a><br>
+
+    <button th:class="btn-outline-info"><a th:href="@{addUniversityPage}">Add university</a></button>
+
+    <div th:class="h1">
+        <p th:class="text-info">List of Universities</p>
+    </div>
+
+    <div th:each="university: ${universities}">
+        <div th:class="container-fluid">
+            <div th:class="card">
+                <div th:class="card-body">
+                    <div>
+                        <p>
+                            <span th:text="${university.name} + ' - ' + ${university.description}"></span>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <span> Locatie:  </span>
+                            <span th:text="${university.city}></span>
+                        </p>
+                    </div>
+                    <span>
+            <button th:class="btn-outline-primary"><a
+                    th:href="@{editUniversityPage(id=${university.id})}">Edit</a></button>
+            <button th:class="btn-outline-danger"><a
+                    th:href="@{deleteUniversity(id=${university.id})}">Delete</a></button>
+            <button th:class="btn-outline-primary"><a
+                    th:href="@{faculties(id=${university.id})}">See faculties</a></button>
+                        <a th:href="@{addFacultyPage(id=${university.id})}" type="button" class="btn btn-success">Add faculty</a>
+            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
